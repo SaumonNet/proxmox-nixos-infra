@@ -206,8 +206,8 @@ in
 
     serviceConfig = {
       Type = "simple";
-      User = "r-ryantm";
-      Group = "r-ryantm";
+      User = "proxmox-nixos-update";
+      Group = "proxmox-nixos-update";
       Restart = "on-failure";
       RestartSec = "5s";
       LogsDirectory = "proxmox-nixos-update/";
