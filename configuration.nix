@@ -1,7 +1,10 @@
 { lib, pkgs, ... }:
 
 {
-  imports = [ ./hardware.nix ];
+  imports = [
+    ./hardware.nix
+    ./proxmox-nixos-update.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

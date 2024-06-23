@@ -1,0 +1,6 @@
+[user]
+        email = proxmox-update@malka.sh
+        name = Proxmox-NixOS Update Bot
+
+[url "git@github.com:"]
+        pushInsteadOf = https://github.com/

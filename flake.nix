@@ -16,7 +16,8 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lila.url = "github:JulienMalka/nix-hash-collection/server-module";
+    agenix.url = "github:ryantm/agenix";
+    proxmox-nixos-update.url = "github:SaumonNet/proxmox-nixos-update";
   };
 
   outputs =
@@ -26,7 +27,8 @@
       flake-utils,
       colmena,
       disko,
-      lila,
+      agenix,
+      proxmox-nixos-update,
       ...
     }@inputs:
     let
@@ -41,11 +43,12 @@
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
+            proxmox-nixos-update = proxmox-nixos-update.packages.x86_64-linux.default;
           };
           modules = [
             value
             disko.nixosModules.disko
-            lila.nixosModules.hash-collection-server
+            agenix.nixosModules.default
           ];
           extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
         }
@@ -65,7 +68,12 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        devShell = pkgs.mkShell { buildInputs = with pkgs; [ colmena.packages.${system}.colmena ]; };
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            colmena.packages.${system}.colmena
+            agenix.packages.${system}.default
+          ];
+        };
       }
     );
 }
