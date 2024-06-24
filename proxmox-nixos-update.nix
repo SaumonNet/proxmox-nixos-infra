@@ -5,7 +5,7 @@
   ...
 }:
 let
-  proxmox-nixos-update-bin = "/var/lib/proxmox-nixos-update/bin/proxmox-nixos-update";
+  proxmox-nixos-update-bin = "${proxmox-nixos-update}/bin/nixpkgs-update";
 
   proxmoxNixOSUpdateSystemDependencies = with pkgs; [
     nix # for nix-shell used by python packges to update fetchers
@@ -18,6 +18,8 @@ let
     cachix
     apacheHttpd # for rotatelogs, used by worker script
     socat # used by worker script
+    python3
+    perl
   ];
 
   mkWorker = name: {
@@ -34,6 +36,7 @@ let
     environment.XDG_CONFIG_HOME = "/var/lib/proxmox-nixos-update/worker";
     environment.XDG_CACHE_HOME = "/var/cache/proxmox-nixos-update/worker";
     environment.XDG_RUNTIME_DIR = "/run/proxmox-nixos-update"; # for nix-update update scripts
+    environment.NIX_PATH = "nixpkgs=${pkgs.path}";
 
     serviceConfig = {
       Type = "simple";
@@ -64,7 +67,7 @@ let
       function run-proxmox-nixos-update {
         exit_code=0
         set -x
-        timeout 6h ${proxmox-nixos-update-bin} update-batch --pr "$attr_path $payload" || exit_code=$?
+        timeout 6h ${proxmox-nixos-update-bin} update --pr "$attr_path $payload" || exit_code=$?
         set +x
         if [ $exit_code -eq 124 ]; then
           echo "Update was interrupted because it was taking too long."
@@ -242,8 +245,6 @@ in
     "L+ /home/proxmox-nixos-update/.gitconfig - - - - ${./gitconfig.txt}"
     "d /home/proxmox-nixos-update/.ssh 700 proxmox-nixos-update proxmox-nixos-update - -"
     "e /var/cache/proxmox-nixos-update/worker/nixpkgs-review - - - 1d -"
-    "d /var/lib/proxmox-nixos-update/bin/ 700 proxmox-nixos-update proxmox-nixos-update - -"
-    "L+ ${proxmox-nixos-update-bin} - - - - ${proxmox-nixos-update}/bin/proxmox-nixos-update"
   ];
 
   age.secrets.github-token = {
