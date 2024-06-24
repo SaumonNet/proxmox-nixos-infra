@@ -237,11 +237,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1719160405,
-        "narHash": "sha256-Aa5ZqSfuPt1/f0gu/xY5hR+6TGJ1qSd1F1Wr1Khj5B8=",
+        "lastModified": 1719225356,
+        "narHash": "sha256-o9k2NYGUf7lo39qEci/eUm9mZmkdn6E68a6BSzfa/Jo=",
         "owner": "SaumonNet",
         "repo": "proxmox-nixos-update",
-        "rev": "9d212d7772b4db6787d0d36b2979e51734ef3b04",
+        "rev": "76197e0764eef14d16b1f7733e5442b574d8518d",
         "type": "github"
       },
       "original": {
