@@ -20,6 +20,23 @@
 
   environment.systemPackages = with pkgs; [ neovim ];
 
+  nix = {
+    package = pkgs.lix;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+    nixPath = [ "nixpkgs=${pkgs.path}" ];
+    settings = {
+      builders-use-substitutes = true;
+      auto-optimise-store = true;
+      substituters = [
+        "https://cache.nixos.org"
+        "https://cache.saumon.network/proxmox-nixos"
+      ];
+      trusted-public-keys = [ "proxmox-nixos:nveXDuVVhFDRFx8Dn19f1WDEaNRJjPrF2CPD2D+m1ys=" ];
+    };
+  };
+
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIADCpuBL/kSZShtXD6p/Nq9ok4w1DnlSoxToYgdOvUqo julien@telecom"
