@@ -262,6 +262,7 @@ in
 
   };
 
+  services.nginx.enable = true;
   services.nginx.recommendedZstdSettings = false;
 
   services.nginx.virtualHosts."proxmox-nixos-update-logs.saumon.network" = {
