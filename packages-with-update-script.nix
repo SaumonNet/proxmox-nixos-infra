@@ -1,5 +1,7 @@
 let
-  pkgs = (import /home/julien/Downloads/proxmox-nixos-main).packages.x86_64-linux;
+  pkgs =
+    (import (fetchTarball "https://github.com/SaumonNet/proxmox-nixos/archive/main.tar.gz"))
+    .packages.x86_64-linux;
   lib = (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz") { }).lib;
 in
 # code in the following let block was copied from nixos/nixpkgs under
