@@ -1,5 +1,9 @@
 { lib, pkgs, ... }:
 
+let
+  ipv6 = "2a01:e0a:de4:a0e1:eb2:caa1::78";
+in
+
 {
   imports = [
     ./hardware.nix
@@ -13,7 +17,7 @@
 
   disko.devices = import ./disko.nix;
 
-  deployment.targetHost = "2a01:e0a:de4:a0e1:eb2:caa1::78";
+  deployment.targetHost = ipv6;
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
@@ -56,7 +60,7 @@
     matchConfig.Name = "ens18";
     networkConfig = {
       DHCP = "ipv4";
-      Address = "2a01:e0a:de4:a0e1:eb2:caa1::78";
+      Address = ipv6;
     };
     # make routing on this interface a dependency for network-online.target
     linkConfig.RequiredForOnline = "routable";

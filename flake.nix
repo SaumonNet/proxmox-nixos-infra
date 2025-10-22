@@ -60,7 +60,8 @@
           nodeSpecialArgs = builtins.mapAttrs (_: v: v._module.specialArgs) self.nixosConfigurations;
           specialArgs.lib = lib;
         };
-      } // builtins.mapAttrs (_: v: { imports = v._module.args.modules; }) self.nixosConfigurations;
+      }
+      // builtins.mapAttrs (_: v: { imports = v._module.args.modules; }) self.nixosConfigurations;
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
@@ -69,8 +70,8 @@
       in
       {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            colmena.packages.${system}.colmena
+          buildInputs = [
+            pkgs.colmena
             agenix.packages.${system}.default
           ];
         };
